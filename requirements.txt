@@ -61,12 +61,18 @@ pyrogram==2.0.106
 youtube-search
 youtube-search-python
 bing_image_downloader
+
+# optional / unstable but kept
 bard
 deepai
 g4f
 pornhub-api==0.3.0
 MukeshAPI
+
+# git deps (safe ones)
 git+https://github.com/yt-dlp/yt-dlp.git
 git+https://github.com/AsmSafone/SafoneAPI
-git+https://github.com/KurimuzonAkuma/pyrogram.git
-git+https://github.com/DAXXTEAM/daxxhub.git
+
+# ⚠️ DISABLED (breaks build unless private access given)
+# git+https://github.com/DAXXTEAM/daxxhub.git
+# git+https://github.com/KurimuzonAkuma/pyrogram.git
