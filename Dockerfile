@@ -1,12 +1,27 @@
-FROM nikolaik/python-nodejs:python3.11-nodejs20
+FROM nikolaik/python-nodejs:python3.10-nodejs19
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ffmpeg \
+# avoid interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# install system deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY . /app/
-WORKDIR /app/
-RUN pip3 install --no-cache-dir -U -r requirements.txt
+# set workdir first
+WORKDIR /app
 
+# copy only requirements first (cache optimization)
+COPY requirements.txt .
+
+# upgrade pip + install deps
+RUN pip3 install --no-cache-dir --upgrade pip \
+    && pip3 install --no-cache-dir -r requirements.txt
+
+# now copy rest of project
+COPY . .
+
+# run
 CMD ["bash", "start"]
